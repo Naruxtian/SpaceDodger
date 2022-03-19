@@ -1,0 +1,119 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Mundo.gd" type="Script" id=2]
+[ext_resource path="res://Obstaculo.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Interfaz.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Sprites/Background.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/BackgroundAD3.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/BackgroundAD4.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/BackgroundAD2.png" type="Texture" id=8]
+[ext_resource path="res://Sounds/Death.wav" type="AudioStream" id=9]
+[ext_resource path="res://Sounds/MFondo.wav" type="AudioStream" id=10]
+[ext_resource path="res://Sounds/Menu.ogg" type="AudioStream" id=11]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -0.698456, 1.79823, 0, 0, 0, 0, 598.958, 3.91715, 0, 0, 0, 0, 601.077, 961.672, 0, 0, 0, 0, -0.698456, 961.672, 0, 0, 0, 0, -0.698456, 1.79823 )
+}
+
+[node name="Mundo" type="Node"]
+script = ExtResource( 2 )
+Obstaculo = ExtResource( 3 )
+
+[node name="Fondo" type="TextureRect" parent="."]
+margin_left = -4.0
+margin_top = 2.0
+margin_right = 507.0
+margin_bottom = 695.0
+texture = ExtResource( 5 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AdornoFondo1" type="TextureRect" parent="."]
+margin_right = 497.0
+margin_bottom = 396.0
+texture = ExtResource( 7 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AdonroFondo2" type="TextureRect" parent="."]
+margin_left = 501.845
+margin_top = 693.308
+margin_right = 998.845
+margin_bottom = 1089.31
+rect_rotation = -180.0
+texture = ExtResource( 7 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AdornoFondo3" type="TextureRect" parent="."]
+margin_left = 135.405
+margin_top = 385.366
+margin_right = 474.405
+margin_bottom = 581.366
+rect_rotation = 90.0
+texture = ExtResource( 6 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+margin_left = 504.0
+margin_top = 3.0
+margin_right = 623.0
+margin_bottom = 241.0
+rect_rotation = 90.0
+texture = ExtResource( 8 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 269.481, 336.352 )
+
+[node name="ObstaculoTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="InicioTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="PosicionDeInicio" type="Position2D" parent="."]
+position = Vector2( 250, 350 )
+
+[node name="Camino" type="Path2D" parent="."]
+position = Vector2( -0.11002, 0.50017 )
+scale = Vector2( 0.842481, 0.721854 )
+curve = SubResource( 1 )
+
+[node name="ObstaculoPosicion" type="PathFollow2D" parent="Camino"]
+position = Vector2( -0.698456, 1.79823 )
+rotation = 0.00353351
+
+[node name="Interfaz" parent="." instance=ExtResource( 4 )]
+
+[node name="AudioMuerte" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+
+[node name="Musica" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+
+[node name="Menu" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+
+[connection signal="golpe" from="Player" to="." method="game_over"]
+[connection signal="timeout" from="ObstaculoTimer" to="." method="_on_ObstaculoTimer_timeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
+[connection signal="timeout" from="InicioTimer" to="." method="_on_InicioTimer_timeout"]
+[connection signal="iniciar_juego" from="Interfaz" to="." method="nuevo_juego"]

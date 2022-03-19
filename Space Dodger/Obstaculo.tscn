@@ -1,0 +1,123 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Sprites/Obstac1-1.png" type="Texture" id=1]
+[ext_resource path="res://Obstaculo.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/Obstac1-2.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Obstac2-1.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Obstac2-2.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Obstac3-1.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Obstac3-2.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Obstac4.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/Obstac4-2.png" type="Texture" id=9]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "Azul",
+"speed": 4.0
+}, {
+"frames": [ ExtResource( 1 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "Naranja",
+"speed": 4.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "Rojo",
+"speed": 4.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "Verde",
+"speed": 4.0
+} ]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 27.2848
+
+[sub_resource type="Gradient" id=5]
+offsets = PoolRealArray( 0, 0.934641 )
+colors = PoolColorArray( 0.96875, 0.482572, 0.0113525, 1, 0.0509804, 0.027451, 0.00392157, 0.776471 )
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0, 0.784314, 0.954248, 1 )
+colors = PoolColorArray( 0.960938, 0.0600586, 0.0600586, 1, 0.03125, 0.0215883, 0.000488281, 0.702019, 0.0504934, 0.0504934, 0.0187988, 0.216421, 0.0392157, 0.0392157, 0, 0 )
+
+[sub_resource type="Gradient" id=4]
+offsets = PoolRealArray( 0.0130719, 0.653595, 1 )
+colors = PoolColorArray( 0.231504, 0.976563, 0.0228882, 0.986928, 0.986132, 0.992188, 0.984436, 0.281046, 1, 1, 1, 0 )
+
+[sub_resource type="Gradient" id=6]
+offsets = PoolRealArray( 0.00653595, 0.75817, 1 )
+colors = PoolColorArray( 0.0152588, 0.300646, 0.976563, 0.993464, 0.92549, 0.937255, 0.960784, 0.435294, 0.980392, 0.980392, 0.980392, 0 )
+
+[node name="Obstaculo" type="RigidBody2D"]
+position = Vector2( 257.704, 112.111 )
+collision_layer = 0
+gravity_scale = 0.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+Velocidad_min = 200
+Velocidad_max = 400
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 3, 3 )
+frames = SubResource( 1 )
+animation = "Naranja"
+frame = 1
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( 1.52806, 0.943871 )
+shape = SubResource( 2 )
+
+[node name="Visibilidad" type="VisibilityNotifier2D" parent="."]
+
+[node name="RastroNaranja" type="CPUParticles2D" parent="."]
+show_behind_parent = true
+amount = 25
+speed_scale = 3.0
+local_coords = false
+emission_shape = 1
+emission_sphere_radius = 25.0
+gravity = Vector2( 0, 0 )
+scale_amount = 5.0
+color_ramp = SubResource( 5 )
+
+[node name="RastroRojo" type="CPUParticles2D" parent="."]
+show_behind_parent = true
+amount = 25
+speed_scale = 3.0
+local_coords = false
+emission_shape = 1
+emission_sphere_radius = 25.0
+gravity = Vector2( 0, 0 )
+scale_amount = 5.0
+color_ramp = SubResource( 3 )
+
+[node name="RastroVerde" type="CPUParticles2D" parent="."]
+show_behind_parent = true
+amount = 25
+speed_scale = 3.0
+local_coords = false
+emission_shape = 1
+emission_sphere_radius = 25.0
+gravity = Vector2( 0, 0 )
+scale_amount = 5.0
+color_ramp = SubResource( 4 )
+
+[node name="RastroAzul" type="CPUParticles2D" parent="."]
+show_behind_parent = true
+amount = 25
+speed_scale = 3.0
+local_coords = false
+emission_shape = 1
+emission_sphere_radius = 25.0
+gravity = Vector2( 0, 0 )
+scale_amount = 5.0
+color_ramp = SubResource( 6 )
+[connection signal="screen_exited" from="Visibilidad" to="." method="_on_Visibilidad_screen_exited"]

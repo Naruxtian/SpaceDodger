@@ -1,0 +1,61 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Sprites/UFO.png" type="Texture" id=1]
+[ext_resource path="res://Player.gd" type="Script" id=5]
+
+[sub_resource type="Animation" id=1]
+resource_name = "GiroUfo"
+length = 4.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 49.4543
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0, 0.00653595, 0.0196078, 0.973856, 0.986928, 1 )
+colors = PoolColorArray( 0.0300293, 0.677301, 0.960938, 1, 0.983735, 0.984024, 0.992157, 0.926175, 0.0619965, 0.933594, 0.878905, 1, 0.976471, 0.980392, 0.992157, 0, 1, 1, 1, 1, 0.0457516, 0.0457516, 0.0457516, 1 )
+
+[node name="Player" type="Area2D"]
+position = Vector2( 261.626, 128.426 )
+script = ExtResource( 5 )
+Velocidad = 400
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -23.1451, 66.6534 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 1 )
+hframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_speed = 8.0
+anims/GiroUfo = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -23.5684, 66.0784 )
+shape = SubResource( 2 )
+
+[node name="Rastro" type="CPUParticles2D" parent="."]
+show_behind_parent = true
+position = Vector2( -24.1359, 69.3669 )
+amount = 50
+speed_scale = 3.0
+local_coords = false
+emission_shape = 1
+emission_sphere_radius = 45.0
+gravity = Vector2( 0, 0 )
+scale_amount = 5.0
+color_ramp = SubResource( 3 )
+
+[connection signal="body_entered" from="." to="." method="_on_Player_body_entered"]
